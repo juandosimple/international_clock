@@ -4,33 +4,53 @@
 <head>
 	<title>Relojes de Buenos Aires y Londres</title>
 	<script>
-		// Verificar si el navegador es compatible con la API Screen Wake Lock
-		if ('wakeLock' in navigator) {
-			// Solicitar la activación del wake lock
-			async function requestWakeLock() {
-				try {
-					// Solicitar el wake lock
-					wakeLock = await navigator.wakeLock.request("screen");
+		let wakeLock = null;
 
-					// Verificar si la pantalla está actualmente en modo de pantalla completa
-					if (document.fullscreenElement === null) {
-						// Solicitar el modo de pantalla completa
-						await document.documentElement.requestFullscreen();
-					} else {
-						// Desactivar el modo de pantalla completa
-						await document.exitFullscreen();
-					}
-				} catch (err) {
-					console.error(`${err.name}, ${err.message}`);
+		// Define la función para actualizar la hora
+		function updateClockTime(elementId, timezoneOffset) {
+			const clockElement = document.getElementById(elementId);
+			const timeElement = clockElement.querySelector('.time');
+
+			const date = new Date();
+			const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+			const time = new Date(utcTime + (timezoneOffset * 60000));
+
+			timeElement.textContent = time.toLocaleTimeString();
+		}
+
+		// Define la función requestWakeLock
+		async function requestWakeLock() {
+			try {
+				// Solicitar el wake lock
+				wakeLock = await navigator.wakeLock.request("screen");
+
+				// Verificar si la pantalla está actualmente en modo de pantalla completa
+				if (document.fullscreenElement === null) {
+					// Solicitar el modo de pantalla completa
+					await document.documentElement.requestFullscreen();
+				} else {
+					// Desactivar el modo de pantalla completa
+					await document.exitFullscreen();
 				}
+			} catch (err) {
+				console.error(`${err.name}, ${err.message}`);
 			}
 		}
 
-		window.addEventListener('load', function() {
-			// Agregar un evento click al botón para solicitar el wake lock
-			const button = document.querySelector('#wakeLockButton');
-			button.addEventListener('click', requestWakeLock);
-		});
+		// Verificar si el navegador es compatible con la API Screen Wake Lock
+		if ('wakeLock' in navigator) {
+
+			document.addEventListener('DOMContentLoaded', function () {
+				const button = document.querySelector('#wakeLockButton');
+				button.addEventListener('click', requestWakeLock);
+			});
+		}
+
+		// Actualizar la hora cada segundo
+		setInterval(() => {
+			updateClockTime('buenosaires', -180);
+			updateClockTime('londres', 0);
+		}, 1000);
 	</script>
 
 	<style type="text/css">
