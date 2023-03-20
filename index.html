@@ -24,11 +24,13 @@
 					console.error(`${err.name}, ${err.message}`);
 				}
 			}
+		}
 
+		window.addEventListener('load', function() {
 			// Agregar un evento click al botón para solicitar el wake lock
 			const button = document.querySelector('#wakeLockButton');
 			button.addEventListener('click', requestWakeLock);
-		}
+		});
 	</script>
 
 	<style type="text/css">
@@ -106,43 +108,4 @@
 			width: 32px;
 		}
 	</style>
-</head>
-
-<body>
-	<div class="container">
-		<h1>Relojes de Buenos Aires y Londres</h1>
-		<div class="button-container">
-			<a href="#" id="wakeLockButton">
-				<img src="./maximize.png" alt="">
-			</a>
-		</div>
-
-
-		<div class="clock-container">
-			<div class="clock" id="buenosaires">
-				<div class="zone"><img src="./argentina.png" alt="">Hora de Buenos Aires</div>
-				<div class="time"></div>
-			</div>
-			<div class="clock" id="londres">
-				<div class="zone"><img src="./united-kingdom.png" alt="">Hora de Londres</div>
-				<div class="time"></div>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript">
-		function updateClock() {
-			// Obtener la hora actual de Buenos Aires
-			var buenosairesTime = new Date().toLocaleTimeString("es-AR", { timeZone: "America/Argentina/Buenos_Aires" });
-			document.getElementById("buenosaires").getElementsByClassName("time")[0].innerHTML = buenosairesTime;
-
-			// Obtener la hora actual de Londres
-			var londresTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
-			document.getElementById("londres").getElementsByClassName("time")[0].innerHTML = londresTime;
-		}
-
-		// Actualizar los relojes cada segundo
-		setInterval(updateClock, 1000);
-	</script>
-</body>
-
-</html>
+</
