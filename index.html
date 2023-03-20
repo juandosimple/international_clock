@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Relojes de Buenos Aires y Londres</title>
+	<style type="text/css">
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+			background: black;
+		}
+		.container{
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		h1 {
+			margin-top: 50px;
+			color: #fff
+		}
+
+		.clock {
+			display: inline-block;
+			padding: 10px;
+			margin: 20px;
+		}
+
+		.time {
+			font-size: 160px;
+			font-weight: bold;
+			margin-bottom: 10px;
+			color: #fff
+		}
+
+		.zone {
+			font-size: 20px;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.zone img {
+			width: 32px;
+			margin-right: 10px;
+		}
+
+		.clock-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+
+		.button-container {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			position: absolute;
+			top: 0;
+			right: 0
+		}
+
+		.button-container a {
+			background: none;
+			color: #fff;
+			border: 0;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+		}
+
+		.button-container a img {
+			width: 32px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Relojes de Buenos Aires y Londres</h1>
+		<div class="button-container">
+			<a href="#" onclick="document.documentElement.requestFullscreen()">
+				<img src="./maximize.png" alt="">
+			</a>
+		</div>
+
+		<div class="clock-container">
+			<div class="clock" id="buenosaires">
+				<div class="zone"><img src="./argentina.png" alt="">Hora de Buenos Aires</div>
+				<div class="time"></div>
+			</div>
+			<div class="clock" id="londres">
+				<div class="zone"><img src="./united-kingdom.png" alt="">Hora de Londres</div>
+				<div class="time"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function updateClock() {
+			// Obtener la hora actual de Buenos Aires
+			var buenosairesTime = new Date().toLocaleTimeString("es-AR", { timeZone: "America/Argentina/Buenos_Aires" });
+			document.getElementById("buenosaires").getElementsByClassName("time")[0].innerHTML = buenosairesTime;
+
+			// Obtener la hora actual de Londres
+			var londresTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
+			document.getElementById("londres").getElementsByClassName("time")[0].innerHTML = londresTime;
+		}
+
+		// Actualizar los relojes cada segundo
+		setInterval(updateClock, 1000);
+	</script>
+</body>
+
+</html>
