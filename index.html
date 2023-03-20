@@ -3,19 +3,40 @@
 
 <head>
 	<title>Relojes de Buenos Aires y Londres</title>
+	<script>
+		// Verificar si el navegador es compatible con la API Screen Wake Lock
+		if ('wakeLock' in navigator) {
+			// Solicitar la activación del wake lock
+			async function requestWakeLock() {
+				try {
+					const wakeLock = await navigator.wakeLock.request('screen');
+					console.log('Wake lock activado');
+				} catch (err) {
+					console.error(`${err.name}, ${err.message}`);
+				}
+			}
+
+			// Agregar un evento click al botón para solicitar el wake lock
+			const button = document.querySelector('#wakeLockButton');
+			button.addEventListener('click', requestWakeLock);
+		}
+	</script>
+
 	<style type="text/css">
 		body {
 			font-family: Arial, sans-serif;
 			text-align: center;
 			background: black;
 		}
-		.container{
+
+		.container {
 			height: 100vh;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
 		}
+
 		h1 {
 			margin-top: 50px;
 			color: #fff
@@ -82,10 +103,11 @@
 	<div class="container">
 		<h1>Relojes de Buenos Aires y Londres</h1>
 		<div class="button-container">
-			<a href="#" onclick="document.documentElement.requestFullscreen()">
-				<img src="./maximize.png" alt="">
+			<a href="#" id="wakeLockButton">
+			  <img src="./maximize.png" alt="">
 			</a>
-		</div>
+		  </div>
+		  
 
 		<div class="clock-container">
 			<div class="clock" id="buenosaires">
