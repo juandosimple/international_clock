@@ -9,8 +9,17 @@
 			// Solicitar la activación del wake lock
 			async function requestWakeLock() {
 				try {
-					const wakeLock = await navigator.wakeLock.request('screen');
-					console.log('Wake lock activado');
+					// Solicitar el wake lock
+					wakeLock = await navigator.wakeLock.request("screen");
+
+					// Verificar si la pantalla está actualmente en modo de pantalla completa
+					if (document.fullscreenElement === null) {
+						// Solicitar el modo de pantalla completa
+						await document.documentElement.requestFullscreen();
+					} else {
+						// Desactivar el modo de pantalla completa
+						await document.exitFullscreen();
+					}
 				} catch (err) {
 					console.error(`${err.name}, ${err.message}`);
 				}
@@ -104,10 +113,10 @@
 		<h1>Relojes de Buenos Aires y Londres</h1>
 		<div class="button-container">
 			<a href="#" id="wakeLockButton">
-			  <img src="./maximize.png" alt="">
+				<img src="./maximize.png" alt="">
 			</a>
-		  </div>
-		  
+		</div>
+
 
 		<div class="clock-container">
 			<div class="clock" id="buenosaires">
