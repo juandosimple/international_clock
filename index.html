@@ -12,8 +12,8 @@
 			const timeElement = clockElement.querySelector('.time');
 
 			const date = new Date();
-			const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
-			const time = new Date(utcTime + (timezoneOffset * 60000));
+  			const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+  			const time = new Date(utcTime + ((timezoneOffset + 60) * 60000)); // add 60 minutes to the timezone offset for UK time
 
 			timeElement.textContent = time.toLocaleTimeString();
 		}
