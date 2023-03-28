@@ -1,156 +1,120 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title>Relojes de Buenos Aires y Londres</title>
-	<script>
-		let wakeLock = null;
+  <title>Relojes de Buenos Aires y Londres</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: black;
+    }
 
-		// Define la función para actualizar la hora
-		function updateClockTime(elementId, timezoneOffset) {
-			const clockElement = document.getElementById(elementId);
-			const timeElement = clockElement.querySelector('.time');
+    .container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-			const date = new Date();
-  			const utcTime = date.getTime() + (date.getTimezoneOffset() * 50000);
-  			const time = new Date(utcTime + ((timezoneOffset + 60) * 60000)); // add 60 minutes to the timezone offset for UK time
+    h1 {
+      margin-top: 50px;
+      color: #fff
+    }
 
-			timeElement.textContent = time.toLocaleTimeString();
-		}
+    .clock {
+      display: inline-block;
+      padding: 10px;
+      margin: 20px;
+    }
 
-		// Define la función requestWakeLock
-		async function requestWakeLock() {
-			try {
-				// Solicitar el wake lock
-				wakeLock = await navigator.wakeLock.request("screen");
+    .time {
+      font-size: 160px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #fff
+    }
 
-				// Verificar si la pantalla está actualmente en modo de pantalla completa
-				if (document.fullscreenElement === null) {
-					// Solicitar el modo de pantalla completa
-					await document.documentElement.requestFullscreen();
-				} else {
-					// Desactivar el modo de pantalla completa
-					await document.exitFullscreen();
-				}
-			} catch (err) {
-				console.error(`${err.name}, ${err.message}`);
-			}
-		}
+    .zone {
+      font-size: 20px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-		// Verificar si el navegador es compatible con la API Screen Wake Lock
-		if ('wakeLock' in navigator) {
+    .zone img {
+      width: 32px;
+      margin-right: 10px;
+    }
 
-			document.addEventListener('DOMContentLoaded', function () {
-				const button = document.querySelector('#wakeLockButton');
-				button.addEventListener('click', requestWakeLock);
-			});
-		}
+    .clock-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-		// Actualizar la hora cada segundo
-		setInterval(() => {
-			updateClockTime('buenosaires', -180);
-			updateClockTime('londres', 0);
-		}, 1000);
-	</script>
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      right: 0
+    }
 
-	<style type="text/css">
-		body {
-			font-family: Arial, sans-serif;
-			text-align: center;
-			background: black;
-		}
+    .button-container a {
+      background: none;
+      color: #fff;
+      border: 0;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
 
-		.container {
-			height: 100vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-		}
-
-		h1 {
-			margin-top: 50px;
-			color: #fff
-		}
-
-		.clock {
-			display: inline-block;
-			padding: 10px;
-			margin: 20px;
-		}
-
-		.time {
-			font-size: 160px;
-			font-weight: bold;
-			margin-bottom: 10px;
-			color: #fff
-		}
-
-		.zone {
-			font-size: 20px;
-			color: #fff;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.zone img {
-			width: 32px;
-			margin-right: 10px;
-		}
-
-		.clock-container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-		}
-
-		.button-container {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			position: absolute;
-			top: 0;
-			right: 0
-		}
-
-		.button-container a {
-			background: none;
-			color: #fff;
-			border: 0;
-			text-decoration: none;
-			display: flex;
-			align-items: center;
-		}
-
-		.button-container a img {
-			width: 32px;
-		}
-	</style>
+    .button-container a img {
+      width: 32px;
+    }
+  </style>
 </head>
-
 <body>
-	<div class="container">
-		<h1>Relojes de Buenos Aires y Londres</h1>
-		<div class="button-container">
-			<a href="#" id="wakeLockButton">
-				<img src="./maximize.png" alt="">
-			</a>
-		</div>
+  <div class="container">
+    <h1>Relojes de Buenos Aires y Londres</h1>
+    <div class="button-container">
+      <a href="#" id="wakeLockButton">
+        <img src="./maximize.png" alt="">
+      </a>
+    </div>
 
+    <div class="clock-container">
+      <div class="clock" id="buenosaires">
+        <div class="zone"><img src="./argentina.png" alt="">Hora de Buenos Aires</div>
+        <div class="time"></div>
+      </div>
+      <div class="clock" id="londres">
+        <div class="zone"><img src="./united-kingdom.png" alt="">Hora de Londres</div>
+        <div class="time"></div>
+      </div>
+    </div>
+  </div>
 
-		<div class="clock-container">
-			<div class="clock" id="buenosaires">
-				<div class="zone"><img src="./argentina.png" alt="">Hora de Buenos Aires</div>
-				<div class="time"></div>
-			</div>
-			<div class="clock" id="londres">
-				<div class="zone"><img src="./united-kingdom.png" alt="">Hora de Londres</div>
-				<div class="time"></div>
-			</div>
-		</div>
-	</div>
+  <script>
+    function updateClockTime(elementId, timezoneOffset) {
+      const clockElement = document.getElementById(elementId);
+      const timeElement = clockElement.querySelector('.time');
+
+      const now = moment();
+      const timezoneTime = moment.utc(now).utcOffset(timezoneOffset);
+
+	  timeElement.textContent = timezoneTime.format('HH:mm:ss');
+    }
+
+    setInterval(() => {
+      updateClockTime('buenosaires', '-03:00');
+      updateClockTime('londres', '+01:00');
+    }, 1000);
+  </script>
 </body>
-
 </html>
