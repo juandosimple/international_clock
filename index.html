@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" fullscreen>
+
 <head>
   <title>Relojes de Buenos Aires y Londres</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -79,6 +80,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Relojes de Buenos Aires y Londres</h1>
@@ -108,13 +110,14 @@
       const now = moment();
       const timezoneTime = moment.utc(now).utcOffset(timezoneOffset);
 
-	  timeElement.textContent = timezoneTime.format('HH:mm:ss');
+      timeElement.textContent = timezoneTime.format('HH:mm:ss');
+      document.documentElement.requestFullscreen(); // Agrega esta línea para poner en pantalla completa
     }
-
     setInterval(() => {
       updateClockTime('buenosaires', '-03:00');
       updateClockTime('londres', '+01:00');
     }, 1000);
   </script>
 </body>
+
 </html>
