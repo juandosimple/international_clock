@@ -103,35 +103,34 @@
   </div>
 
   <script>
-    function updateClockTime(elementId, timezoneOffset) {
-      const clockElement = document.getElementById(elementId);
-      const timeElement = clockElement.querySelector('.time');
+function updateClockTime(elementId, timezoneOffset) {
+  const clockElement = document.getElementById(elementId);
+  const timeElement = clockElement.querySelector('.time');
 
-      const now = moment();
-      const timezoneTime = moment.utc(now).utcOffset(timezoneOffset);
+  const now = moment();
+  const timezoneTime = moment.utc(now).utcOffset(timezoneOffset);
 
-      timeElement.textContent = timezoneTime.format('HH:mm:ss');
-    }
+  timeElement.textContent = timezoneTime.format('HH:mm:ss');
+}
 
-    setInterval(() => {
-      updateClockTime('buenosaires', '-03:00');
-      updateClockTime('londres', '+01:00');
-    }, 1000);
+setInterval(() => {
+  updateClockTime('buenosaires', '-03:00');
+  updateClockTime('londres', '+01:00');
+}, 1000);
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const displayElement = document.getElementById('display');
-      displayElement.addEventListener('click', function () {
-        if (displayElement.requestFullscreen) {
-          displayElement.requestFullscreen();
-        } else if (displayElement.mozRequestFullScreen) { /* Firefox */
-          displayElement.mozRequestFullScreen();
-        } else if (displayElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-          displayElement.webkitRequestFullscreen();
-        } else if (displayElement.msRequestFullscreen) { /* IE/Edge */
-          displayElement.msRequestFullscreen();
-        }
-      });
-    });
+function requestFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+// Add event listener to the document that listens for user interaction
+document.addEventListener('click', requestFullscreen);
 
   </script>
 </body>
