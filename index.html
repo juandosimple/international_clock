@@ -111,12 +111,28 @@
       const timezoneTime = moment.utc(now).utcOffset(timezoneOffset);
 
       timeElement.textContent = timezoneTime.format('HH:mm:ss');
-      document.documentElement.requestFullscreen(); // Agrega esta línea para poner en pantalla completa
     }
+
     setInterval(() => {
       updateClockTime('buenosaires', '-03:00');
       updateClockTime('londres', '+01:00');
     }, 1000);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const displayElement = document.getElementById('display');
+      displayElement.addEventListener('click', function () {
+        if (displayElement.requestFullscreen) {
+          displayElement.requestFullscreen();
+        } else if (displayElement.mozRequestFullScreen) { /* Firefox */
+          displayElement.mozRequestFullScreen();
+        } else if (displayElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+          displayElement.webkitRequestFullscreen();
+        } else if (displayElement.msRequestFullscreen) { /* IE/Edge */
+          displayElement.msRequestFullscreen();
+        }
+      });
+    });
+
   </script>
 </body>
 
